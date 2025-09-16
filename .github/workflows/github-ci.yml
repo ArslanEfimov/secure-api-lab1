@@ -4,20 +4,20 @@ on:
     branches:
       - main
     paths:
-      - "secure-api-lab1/**"
-      - "github-ci.yml"
+      - "**"
+      - ".github/workflows/github-ci.yml"
   pull_request:
     branches:
       - main
     paths:
-      - "secure-api-lab1/**"
+      - "**"
       - "github-ci.yml"
 
 permissions:
   contents: read
 
 env:
-  TARGET_DIR: secure-api-lab1
+  TARGET_DIR: .
   SNYK_SEVERITY: high
 
 
