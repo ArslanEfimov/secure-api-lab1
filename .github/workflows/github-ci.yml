@@ -1,18 +1,17 @@
-name: Security CI
-
+name: Security Scan
 on:
   push:
     branches:
       - main
     paths:
       - "secure-api-lab1/**"
-      - ".github/workflows/ci.yml"
+      - "github-ci.yml"
   pull_request:
     branches:
       - main
     paths:
       - "secure-api-lab1/**"
-      - ".github/workflows/ci.yml"
+      - "github-ci.yml"
 
 permissions:
   contents: read
