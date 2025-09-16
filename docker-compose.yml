@@ -1,0 +1,15 @@
+services:
+  postgres-db:
+    image: postgres:latest
+    container_name: db-secure-api-lab1
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db-secure-api-lab1
+    volumes:
+      - postgres_db-secure-api-lab1-data:/var/lib/postgresql/data
+volumes:
+  postgres_db-secure-api-lab1-data:
