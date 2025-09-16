@@ -1,0 +1,71 @@
+name: Security CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "secure-api-lab1/**"
+      - ".github/workflows/ci.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "secure-api-lab1/**"
+      - ".github/workflows/ci.yml"
+
+permissions:
+  contents: read
+
+env:
+  TARGET_DIR: secure-api-lab1
+  SNYK_SEVERITY: high
+
+
+jobs:
+  spotbugs:
+    name: SpotBugs scan
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{env.TARGET_DIR}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: Run SpotBugs
+        run: ./gradlew spotbugsMain
+
+      - name: Upload SpotBugs report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spotbugs-report
+          path: ${{ env.TARGET_DIR }}/build/reports/spotbugs/**/*.html
+          if-no-files-found: ignore
+
+
+  security:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.TARGET_DIR }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: snyk/actions/setup@master
+
+      - name: Snyk test (SCA)
+        run: snyk test --all-sub-projects --show-vulnerable-paths=all
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
