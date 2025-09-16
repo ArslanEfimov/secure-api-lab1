@@ -11,7 +11,7 @@ on:
       - main
     paths:
       - "**"
-      - "github-ci.yml"
+      - ".github/workflows/github-ci.yml"
 
 permissions:
   contents: read

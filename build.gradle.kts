@@ -52,6 +52,10 @@ dependencies {
 
 	spotbugsPlugins("com.h3xstream.findsecbugs:findsecbugs-plugin:1.14.0")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	implementation("org.apache.commons:commons-lang3:3.18.0")
+	spotbugs("com.github.spotbugs:spotbugs:4.9.4")
+	spotbugs("org.apache.commons:commons-lang3:3.18.0")
 }
 
 spotbugs {
