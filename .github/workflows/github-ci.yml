@@ -54,7 +54,7 @@ jobs:
           if-no-files-found: ignore
 
 
-  security:
+  snyk:
     runs-on: ubuntu-latest
     defaults:
       run:

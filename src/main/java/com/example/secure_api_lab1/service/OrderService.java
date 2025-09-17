@@ -13,15 +13,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -59,7 +56,7 @@ public class OrderService {
                 .id(savedOrder.getId())
                 .price(price)
                 .data(createData)
-                .productName(productName)
+                .productName(HtmlUtils.htmlEscape(productName))
                 .build();
 
 
@@ -77,7 +74,7 @@ public class OrderService {
         dto.setId(order.getId());
         dto.setData(order.getData());
         dto.setPrice(order.getPrice());
-        dto.setProductName(order.getProductName());
+        dto.setProductName(HtmlUtils.htmlEscape(order.getProductName()));
         return dto;
     }
 
